@@ -1,0 +1,61 @@
+<div class="container">
+  <form
+    [formGroup]="formulaire"
+    (ngSubmit)="onSubmit()"
+    class="mt-4 formulaire"
+  >
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        formControlName="email"
+        type="email"
+        placeholder="Ex. john.doe@stagiaire.msn.com"
+      />
+      @if(formulaire.get('email')?.hasError('required')) {
+      <mat-error>Le champ est obligatoire</mat-error>
+      } @else if(formulaire.get('email')?.hasError('email')) {
+      <mat-error>Le format de l'email est incorrect</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Firstname</mat-label>
+      <input
+        matInput
+        formControlName="firstname"
+        type="text"
+        placeholder="Ex. John"
+      />
+      <mat-error>Le champ est obligatoire</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Lastname</mat-label>
+      <input
+        matInput
+        formControlName="lastname"
+        type="text"
+        placeholder="Ex. Doe"
+      />
+      <mat-error>Le champ est obligatoire</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput formControlName="password" type="password" />
+      <mat-error>Le champ est obligatoire</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Rôle</mat-label>
+      <mat-select formControlName="role">
+        @for (role of listeRoles; track role) {
+        <mat-option [value]="role">{{ role }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary">Ajouter l'utilisateur</button>
+  </form>
+</div>

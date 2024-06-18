@@ -1,0 +1,77 @@
+<h1 class="pageTitle">Gestion des trajets</h1>
+
+<a mat-raised-button color="primary" routerLink="/add-travel" class="addButton">Ajouter un trajet</a>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="listeTrajet">
+    <ng-container matColumnDef="destination">
+      <th mat-header-cell *matHeaderCellDef>Destination</th>
+      <td mat-cell *matCellDef="let trajet">{{ trajet.destination }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="seats">
+      <th mat-header-cell *matHeaderCellDef>Nombre de places disponibles</th>
+      <td mat-cell *matCellDef="let trajet">{{ trajet.seats }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bookTravel">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let trajet">
+        <a mat-raised-button color="primary" routerLink="#">Demander à participer au trajet</a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let trajet">
+        <button
+          mat-mini-fab
+          color="accent"
+          [routerLink]="['/edit-travel', trajet.id]"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-mini-fab
+          class="ms-3"
+          color="warn"
+          (click)="onSuppressionTrajet(trajet.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    @if(authentification.role == "Etudiant") {
+      <tr
+      mat-header-row
+      *matHeaderRowDef="['destination', 'seats', 'bookTravel', 'actions']"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="
+        let row;
+        columns: ['destination', 'seats', 'bookTravel', 'actions']"
+    ></tr>
+    } @else {
+      <tr
+      mat-header-row
+      *matHeaderRowDef="['destination', 'seats', 'actions']"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="
+        let row;
+        columns: ['destination', 'seats', 'actions']"
+    ></tr>
+    }
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</div>

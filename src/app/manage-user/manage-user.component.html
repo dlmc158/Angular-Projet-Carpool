@@ -1,0 +1,76 @@
+<h1 class="pageTitle">Gestion des utilisateurs</h1>
+
+@if(authentification.role == "Administrateur") {
+
+  <a mat-raised-button color="primary" routerLink="/add-user" class="addButton">Ajouter un nouvel utilisateur</a>
+}
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="listeUtilisateur">
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let utilisateur">{{ utilisateur.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="firstname">
+      <th mat-header-cell *matHeaderCellDef>Prénom</th>
+      <td mat-cell *matCellDef="let utilisateur">
+        {{ utilisateur.firstname }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastname">
+      <th mat-header-cell *matHeaderCellDef>Nom</th>
+      <td mat-cell *matCellDef="let utilisateur">{{ utilisateur.lastname }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef>Rôle</th>
+      <td mat-cell *matCellDef="let utilisateur">{{ utilisateur.role }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let utilisateur">
+        @if(authentification.role == "Administrateur") {
+
+        <button
+          mat-mini-fab
+          color="accent"
+          [routerLink]="['/edit-user', utilisateur.id]"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-mini-fab
+          class="ms-3"
+          color="warn"
+          (click)="onSuppressionUtilisateur(utilisateur.id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+        }
+      </td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="['email', 'firstname', 'lastname', 'role', 'actions']"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="
+        let row;
+        columns: ['email', 'firstname', 'lastname', 'role', 'actions']
+      "
+    ></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</div>

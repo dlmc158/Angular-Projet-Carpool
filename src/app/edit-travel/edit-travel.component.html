@@ -1,0 +1,29 @@
+<div class="container">
+  <form
+    [formGroup]="formulaire"
+    (ngSubmit)="onSubmit()"
+    class="mt-4 formulaire"
+  >
+    <mat-form-field>
+      <mat-label>Destination</mat-label>
+      <input
+        matInput
+        formControlName="destination"
+        type="text"
+        placeholder="Ex. Metz"
+      />
+      <mat-error>Le champ est obligatoire</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Nombre de places</mat-label>
+      <mat-select formControlName="seats">
+        @for (seat of listeSeats; track seat) {
+        <mat-option [value]="seat">{{ seat }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary">Ajouter le trajet</button>
+  </form>
+</div>
